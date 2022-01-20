@@ -8,7 +8,7 @@ export default new Vuex.Store({
     groupes: [],
     achats: [],
     ready: false,
-    cpt: 0
+    cpt: 0,
   },
   mutations: {
     setReady(state) {

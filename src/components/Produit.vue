@@ -15,11 +15,6 @@
       </p>
     </td>
     <td><code>{{p.pid}}</code></td>
-    <td class="is-hidden-mobile is-hidden-tablet-only">
-      {{p.nom}}
-      <br />
-      
-    </td>
     <td class="is-hidden-mobile is-hidden-tablet-only">{{p.product.priceNumeral}}€</td>
     <td>{{p.qte}}</td>
     <td class="is-hidden-mobile is-hidden-tablet-only">{{p.product.priceNumeral*p.qte}}€</td>
