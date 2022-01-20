@@ -7,7 +7,7 @@
     </td>
     <td>
       <a
-        href="https://www.ikea.com/fr/fr/p/metod-caisson-surmeuble-refrig-cong-blanc-40205537/"
+        :href="p.product.pipUrl"
         target="_blank"
       >{{p.product.name}}</a>
       <p>
