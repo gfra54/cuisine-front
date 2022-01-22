@@ -6,15 +6,19 @@
       </a>
     </td>
     <td>
-      <a
-        :href="p.product.pipUrl"
-        target="_blank"
-      >{{p.product.name}}</a>
+      <a :href="p.product.pipUrl" target="_blank">{{p.product.name}}</a>
+      <small class="tag" v-if="p.g">{{p.g.nom}}</small>
       <p>
-        <small>{{p.product.typeName}}<br>{{p.product.itemMeasureReferenceText}}</small>
+        <small>
+          {{p.product.typeName}}
+          <br />
+          {{p.product.itemMeasureReferenceText}}
+        </small>
       </p>
     </td>
-    <td><code>{{p.pid}}</code></td>
+    <td>
+      <code>{{p.pid}}</code>
+    </td>
     <td class="is-hidden-mobile is-hidden-tablet-only">{{p.product.priceNumeral}}€</td>
     <td>{{p.qte}}</td>
     <td class="is-hidden-mobile is-hidden-tablet-only">{{p.product.priceNumeral*p.qte}}€</td>
@@ -32,14 +36,28 @@
         :class="etatReception ? 'is-success' : 'is-warning'"
       >{{libReception}}</button>
     </td>
+    <td>
+      <select v-model="meta.etat" @change="setMeta('etat')">
+        <option v-for="etat in etats" :key="etat">{{etat}}</option>
+      </select>
+    </td>
   </tr>
 </template>
 
 <script>
 export default {
   props: ["p"],
+  mounted() {
+    if (this.$store.state.metas[this.p.id]) {
+        this.meta = this.$store.state.metas[this.p.id];
+      }
+  },
   data() {
     return {
+      meta: {
+        etat: "",
+      },
+      etats: ['',"Dans le caddie", "Commandé", "Manquant", "En attente", "Stocké"],
       achat: null,
       reception: null,
     };
@@ -95,6 +113,13 @@ export default {
           this.$store.commit("setReceptions", response.data);
         });
     },
+    setMeta(w) {
+      this.$api
+        .post("meta", { id: this.p.id, meta: this.meta })
+        .then((response) => {
+          this.$store.commit("setMetas", response.data);
+        });
+    }
   },
 };
 </script>
@@ -105,8 +130,8 @@ img {
   height: 40px;
   object-fit: contain;
 }
-.ok td, .ok td a {
-    color: #aaa;
-
+.ok td,
+.ok td a {
+  color: #aaa;
 }
 </style>

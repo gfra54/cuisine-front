@@ -29,6 +29,14 @@ export default {
           this.$store.commit("setReady");
         });
       this.$api
+        .get("metas")
+        .then((response) => {
+          this.$store.commit("setMetas", response.data);
+        })
+        .finally(() => {
+          this.$store.commit("setReady");
+        });
+      this.$api
         .get("receptions")
         .then((response) => {
           this.$store.commit("setReceptions", response.data);

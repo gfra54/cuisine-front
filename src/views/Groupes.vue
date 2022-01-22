@@ -9,52 +9,50 @@
         </span>
       </p>
     </div>
-    <div class="table-container">
-      <table class="table is-narrow is-fullwidth" v-if="$store.state.ready">
-        <thead>
-          <tr>
-            <th class="is-hidden-mobile is-hidden-tablet-only"></th>
-            <th>Nom</th>
-            <th>Référence</th>
-            <th class="is-hidden-mobile is-hidden-tablet-only">Prix</th>
-            <th>Quantité</th>
-            <th class="is-hidden-mobile is-hidden-tablet-only">Total</th>
-            <th>Achat</th>
-            <th>Réception</th>
-          </tr>
-        </thead>
-        <tbody v-for="groupe in $store.state.groupes" :key="groupe.id">
-          <tr v-if="afficherGroupe(groupe)">
-            <th colspan="100">
-              <a @click="groupe.hidden = !groupe.hidden">{{groupe.nom}}</a>
-              / {{groupe.nbProduits}} produits et {{groupe.nbReferences}} références
-            </th>
-          </tr>
-          <template v-if="!groupe.hidden">
-            <template v-for="p in groupe.ps">
-              <template v-if="afficherProduit(p)">
+    <div class="table-container" v-if="$store.state.ready">
+      <template v-if="search">
+        <h2 class="subtitle">{{searchResults.length}} résultat(s) trouvé(s)</h2>
+        <table class="table is-narrow is-fullwidth">
+          <colonnes />
+          <template v-for="p in searchResults">
+            <Produit :p="p" :key="p.id" />
+          </template>
+        </table>
+      </template>
+      <template v-else>
+        <table class="table is-narrow is-fullwidth">
+          <colonnes />
+          <tbody v-for="groupe in $store.state.groupes" :key="groupe.id">
+            <tr>
+              <th colspan="100">
+                <a @click="groupe.hidden = !groupe.hidden">{{groupe.nom}}</a>
+                / {{groupe.nbProduits}} produits et {{groupe.nbReferences}} références
+              </th>
+            </tr>
+            <template v-if="!groupe.hidden">
+              <template v-for="p in groupe.ps">
                 <Produit :p="p" :key="p.id" />
               </template>
             </template>
-          </template>
 
-          <template v-if="afficherGroupe(groupe)">
-            <tr v-if="afficherGroupe(groupe)">
+            <tr>
               <th></th>
               <th colspan="100">Total : {{groupe.total}}€</th>
             </tr>
             <tr>
               <td>&nbsp;</td>
             </tr>
-          </template>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
 import Produit from "@/components/Produit.vue";
+import Colonnes from "@/components/Colonnes.vue";
+import Scanner from "@/components/Scanner.vue";
 
 export default {
   data() {
@@ -91,9 +89,51 @@ export default {
         return true;
       }
     },
+    textSearch(obj) {
+      if(obj.nom.toLowerCase().includes(this.searchLower)) {
+        return true;
+      }
+      if(obj.product.name.toLowerCase().includes(this.searchLower)) {
+        return true;
+      }
+      if(obj.product.typeName.toLowerCase().includes(this.searchLower)) {
+        return true;
+      }
+    },
+  },
+  computed: {
+    searchLower() {
+      return this.search.toLowerCase();
+    },
+    searchResults() {
+      let produits = [];
+      if (this.searchLower) {
+        this.$store.state.produits.forEach((p) => {
+          let ok = false;
+          if (p.pid == this.searchLower) {
+            ok = true;
+          } else if (p.pid.replace(".", "") == this.searchLower) {
+            ok = true;
+          } else if (p.pid.replace(".", "").includes(this.searchLower)) {
+            ok = true;
+          } else if (p.pid.includes(this.searchLower)) {
+            ok = true;
+          } else {
+            ok = this.textSearch(p);
+          }
+
+          if (ok) {
+            produits.push(p);
+          }
+        });
+      }
+      return produits;
+    },
   },
   components: {
     Produit,
+    Colonnes,
+    Scanner,
   },
 };
 </script>
