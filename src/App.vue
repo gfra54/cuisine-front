@@ -2,8 +2,8 @@
   <section class="section">
     <h1 class="title">La cuisine</h1>
     <nav>
-      <router-link to="/">Groupes</router-link> | 
-      <router-link to="/inventaire">Inventaire</router-link> | 
+      <router-link to="/">Groupes de montage</router-link> | 
+      <router-link to="/inventaire">Inventaire des produits</router-link> | 
       <a
         target="_blank"
         href="https://kitchen.planner.ikea.com/planner/#/fr/fr/planner?rangeEnv=ProdRange&environmentStage=main&projectId=E8F608A6-32A5-4071-AEE0-81CA8AD71829"

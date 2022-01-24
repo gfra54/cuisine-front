@@ -15,7 +15,7 @@
         <table class="table is-narrow is-fullwidth">
           <colonnes />
           <template v-for="p in searchResults">
-            <Produit :p="p" :key="p.id" />
+            <Produit :p="p" :key="p.id" editable="true"/>
           </template>
         </table>
       </template>
@@ -31,7 +31,7 @@
             </tr>
             <template v-if="!groupe.hidden">
               <template v-for="p in groupe.ps">
-                <Produit :p="p" :key="p.id" />
+                <Produit :p="p" :key="p.id"  editable="true"/>
               </template>
             </template>
 
