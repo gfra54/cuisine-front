@@ -9,6 +9,7 @@
       <th class="is-hidden-mobile is-hidden-tablet-only">Total</th>
       <th>Achat</th>
       <th>Réception</th>
+      <th>Etat</th>
     </tr>
   </thead>
 </template>

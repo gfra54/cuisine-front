@@ -1,47 +1,50 @@
 <template>
-  <tr :class="{'ok':etatAchat && etatReception}">
-    <td class="is-hidden-mobile is-hidden-tablet-only">
-      <a :href="p.product.mainImageUrl" target="_blank">
-        <img :src="p.product.mainImageUrl" />
-      </a>
-    </td>
-    <td>
-      <a :href="p.product.pipUrl" target="_blank">{{p.product.name}}</a>
-      <small class="tag" v-if="p.g">{{p.g.nom}}</small>
-      <p>
-        <small>
-          {{p.product.typeName}}
-          <br />
-          {{p.product.itemMeasureReferenceText}}
-        </small>
-      </p>
-    </td>
-    <td>
-      <code>{{p.pid}}</code>
-    </td>
-    <td class="is-hidden-mobile is-hidden-tablet-only">{{p.product.priceNumeral}}€</td>
-    <td>{{p.qte}}</td>
-    <td class="is-hidden-mobile is-hidden-tablet-only">{{p.product.priceNumeral*p.qte}}€</td>
-    <td>
-      <button
-        @click="setAchat"
-        class="button is-small"
-        :class="etatAchat ? 'is-success' : 'is-warning'"
-      >{{libAchat}}</button>
-    </td>
-    <td>
-      <button
-        @click="setReception"
-        class="button is-small"
-        :class="etatReception ? 'is-success' : 'is-warning'"
-      >{{libReception}}</button>
-    </td>
-    <td>
-      <select v-model="meta.etat" @change="setMeta('etat')">
-        <option v-for="etat in etats" :key="etat">{{etat}}</option>
-      </select>
-    </td>
-  </tr>
+    <tr :class="{'ok':etatAchat && etatReception}">
+      <td class="is-hidden-mobile is-hidden-tablet-only">
+        <a :href="p.product.mainImageUrl" target="_blank">
+          <img :src="p.product.mainImageUrl" />
+        </a>
+      </td>
+      <td>
+        <a :href="p.product.pipUrl" target="_blank">{{p.product.name}}</a>
+        <small class="tag" v-if="p.g"><router-link :to="{name:'Groupes',query : {s:p.g.nom}}">{{p.g.nom}}</router-link></small>
+        <p>
+          <small>
+            {{p.product.typeName}}
+            <br />
+            {{p.product.itemMeasureReferenceText}}
+          </small>
+        </p>
+        <template v-for="g in p.groupes">
+          <span class="tag">Groupe {{Number(g.split(' ')[0])}}</span>&nbsp;
+        </template>
+      </td>
+      <td>
+        <router-link :to="{name:'Groupes',query : {s:p.pid}}"><code>{{p.pid}}</code></router-link>
+      </td>
+      <td class="is-hidden-mobile is-hidden-tablet-only">{{p.product.priceNumeral}}€</td>
+      <td>{{p.qte}}</td>
+      <td class="is-hidden-mobile is-hidden-tablet-only">{{p.product.priceNumeral*p.qte}}€</td>
+      <td>
+        <button
+          @click="setAchat"
+          class="button is-small"
+          :class="etatAchat ? 'is-success' : 'is-warning'"
+        >{{libAchat}}</button>
+      </td>
+      <td>
+        <button
+          @click="setReception"
+          class="button is-small"
+          :class="etatReception ? 'is-success' : 'is-warning'"
+        >{{libReception}}</button>
+      </td>
+      <td>
+        <select v-model="meta.etat" @change="setMeta('etat')">
+          <option v-for="etat in etats" :key="etat">{{etat}}</option>
+        </select>
+      </td>
+    </tr>
 </template>
 
 <script>
@@ -49,15 +52,22 @@ export default {
   props: ["p"],
   mounted() {
     if (this.$store.state.metas[this.p.id]) {
-        this.meta = this.$store.state.metas[this.p.id];
-      }
+      this.meta = this.$store.state.metas[this.p.id];
+    }
   },
   data() {
     return {
       meta: {
         etat: "",
       },
-      etats: ['',"Dans le caddie", "Commandé", "Manquant", "En attente", "Stocké"],
+      etats: [
+        "",
+        "Dans le caddie",
+        "Commandé",
+        "Manquant",
+        "En attente",
+        "Stocké",
+      ],
       achat: null,
       reception: null,
     };
@@ -119,7 +129,7 @@ export default {
         .then((response) => {
           this.$store.commit("setMetas", response.data);
         });
-    }
+    },
   },
 };
 </script>

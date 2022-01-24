@@ -52,9 +52,22 @@
 <script>
 import Produit from "@/components/Produit.vue";
 import Colonnes from "@/components/Colonnes.vue";
-import Scanner from "@/components/Scanner.vue";
 
 export default {
+  watch: {
+    $route() {
+      if (this.$route.query.s) {
+        this.search = this.$route.query.s;
+      } else {
+        this.search='';
+      }
+    },
+  },
+  mounted() {
+    if (this.$route.query.s) {
+      this.search = this.$route.query.s;
+    }
+  },
   data() {
     return {
       search: "",
@@ -90,13 +103,16 @@ export default {
       }
     },
     textSearch(obj) {
-      if(obj.nom.toLowerCase().includes(this.searchLower)) {
+      if (obj.nom.toLowerCase().includes(this.searchLower)) {
         return true;
       }
-      if(obj.product.name.toLowerCase().includes(this.searchLower)) {
+      if (obj.product.name.toLowerCase().includes(this.searchLower)) {
         return true;
       }
-      if(obj.product.typeName.toLowerCase().includes(this.searchLower)) {
+      if (obj.product.typeName.toLowerCase().includes(this.searchLower)) {
+        return true;
+      }
+      if (obj.g.nom.toLowerCase().includes(this.searchLower)) {
         return true;
       }
     },
@@ -133,7 +149,6 @@ export default {
   components: {
     Produit,
     Colonnes,
-    Scanner,
   },
 };
 </script>
