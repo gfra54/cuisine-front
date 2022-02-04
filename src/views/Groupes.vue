@@ -73,19 +73,24 @@ export default {
   },
   mounted() {
     document.body.addEventListener("keyup", (e) => {
-      if (e.target.name != "recherche") {
-        let key = e.key;
-        let ok = false;
-        if (e.keyCode >= 48 && e.keyCode <= 57) {
-          ok = true;
-        } else if (e.keyCode >= 65 && e.keyCode <= 90) {
-          ok = true;
-        } else if (e.keyCode >= 97 && e.keyCode <= 122) {
-          ok = true;
-        }
-        if(ok){
-          this.search=key;
-          this.$refs.recherche.focus();
+      if (e.key == "Escape") {
+        this.search = "";
+        this.$refs.recherche.focus();
+      } else {
+        if (e.target.name != "recherche") {
+          let key = e.key;
+          let ok = false;
+          if (e.keyCode >= 48 && e.keyCode <= 57) {
+            ok = true;
+          } else if (e.keyCode >= 65 && e.keyCode <= 90) {
+            ok = true;
+          } else if (e.keyCode >= 97 && e.keyCode <= 122) {
+            ok = true;
+          }
+          if (ok) {
+            this.search = key;
+            this.$refs.recherche.focus();
+          }
         }
       }
     });
@@ -154,7 +159,7 @@ export default {
       if (this.searchLower) {
         this.$store.state.produits.forEach((p) => {
           let ok = false;
-          let pid = p.pid.replace(/\D/g,'');
+          let pid = p.pid.replace(/\D/g, "");
           if (p.pid == this.searchLower) {
             ok = true;
           } else if (pid == this.searchLower) {
