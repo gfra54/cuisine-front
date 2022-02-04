@@ -1,5 +1,5 @@
 <template>
-  <tr :class="{'ok':etatReception}">
+  <tr :class="{'ok':etatReception}" v-if="afficher">
     <td class="is-hidden-mobile is-hidden-tablet-only">
       <a :href="p.product.mainImageUrl" target="_blank">
         <img :src="p.product.mainImageUrl" />
@@ -83,6 +83,19 @@ export default {
     };
   },
   computed: {
+    afficher() {
+      if(this.$route.query.reception == 'false') {
+        if(!this.etatReception) {
+          return true;
+        }
+      } else if(this.$route.query.reception == 'true') {
+        if(this.etatReception) {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    },
     libAchat() {
       if (this.etatAchat) {
         return "Payé";

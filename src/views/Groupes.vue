@@ -107,7 +107,7 @@ export default {
     updateSearch(value) {
       this.search = value;
     },
-    afficherGroupe(groupe) {
+    /*    afficherGroupe(groupe) {
       if (this.search) {
         let afficher = 0;
         groupe.ps.forEach((p) => {
@@ -134,7 +134,7 @@ export default {
       } else {
         return true;
       }
-    },
+    },*/
     textSearch(obj) {
       if (obj.nom.toLowerCase().includes(this.searchLower)) {
         return true;

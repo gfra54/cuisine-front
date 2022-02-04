@@ -3,6 +3,8 @@
     <h1 class="title">La cuisine</h1>
     <nav>
       <router-link to="/">Groupes de montage</router-link> | 
+      <router-link to="/?reception=true">Reçus</router-link> | 
+      <router-link to="/?reception=false">Non reçus</router-link> | 
       <router-link to="/inventaire">Inventaire des produits</router-link> | 
       <a href="https://docs.google.com/spreadsheets/d/1Y6rYYgZjvIj23nI9MKouNeY51Vn774ELOeYHm3G4pPE/edit?usp=sharing" target="_blank">Liste de produits</a> |
       <a
