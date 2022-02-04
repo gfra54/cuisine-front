@@ -4,6 +4,7 @@
     <nav>
       <router-link to="/">Groupes de montage</router-link> | 
       <router-link to="/inventaire">Inventaire des produits</router-link> | 
+      <a href="https://docs.google.com/spreadsheets/d/1Y6rYYgZjvIj23nI9MKouNeY51Vn774ELOeYHm3G4pPE/edit?usp=sharing" target="_blank">Liste de produits</a> |
       <a
         target="_blank"
         href="https://kitchen.planner.ikea.com/planner/#/fr/fr/planner?rangeEnv=ProdRange&environmentStage=main&projectId=E8F608A6-32A5-4071-AEE0-81CA8AD71829"
