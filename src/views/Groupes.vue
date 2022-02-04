@@ -72,7 +72,7 @@ export default {
     },
   },
   mounted() {
-    document.body.addEventListener("keydown", (e) => {
+    document.body.addEventListener("keyup", (e) => {
       if (e.target.name != "recherche") {
         let key = e.key;
         let ok = false;
