@@ -5,6 +5,8 @@
       <p class="control has-icons-left">
         <input
           type="text"
+          name="recherche"
+          ref="recherche"
           placeholder="Rechercher un produit"
           class="input"
           v-model="search"
@@ -70,6 +72,23 @@ export default {
     },
   },
   mounted() {
+    document.body.addEventListener("keydown", (e) => {
+      if (e.target.name != "recherche") {
+        let key = e.key;
+        let ok = false;
+        if (e.keyCode >= 48 && e.keyCode <= 57) {
+          ok = true;
+        } else if (e.keyCode >= 65 && e.keyCode <= 90) {
+          ok = true;
+        } else if (e.keyCode >= 97 && e.keyCode <= 122) {
+          ok = true;
+        }
+        if(ok){
+          this.search=key;
+        }
+        this.$refs.recherche.focus();
+      }
+    });
     if (this.$route.query.s) {
       this.search = this.$route.query.s;
     }
@@ -135,11 +154,12 @@ export default {
       if (this.searchLower) {
         this.$store.state.produits.forEach((p) => {
           let ok = false;
+          let pid = p.pid.replace(/\D/g,'');
           if (p.pid == this.searchLower) {
             ok = true;
-          } else if (p.pid.replace(".", "") == this.searchLower) {
+          } else if (pid == this.searchLower) {
             ok = true;
-          } else if (p.pid.replace(".", "").includes(this.searchLower)) {
+          } else if (pid.includes(this.searchLower)) {
             ok = true;
           } else if (p.pid.includes(this.searchLower)) {
             ok = true;
