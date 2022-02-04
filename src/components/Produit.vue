@@ -1,5 +1,5 @@
 <template>
-  <tr :class="{'ok':etatAchat && etatReception}">
+  <tr :class="{'ok':etatReception}">
     <td class="is-hidden-mobile is-hidden-tablet-only">
       <a :href="p.product.mainImageUrl" target="_blank">
         <img :src="p.product.mainImageUrl" />
