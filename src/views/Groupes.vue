@@ -3,7 +3,13 @@
     <hr />
     <div class="field">
       <p class="control has-icons-left">
-        <input type="text" placeholder="Rechercher un produit" class="input" v-model="search" />
+        <input
+          type="text"
+          placeholder="Rechercher un produit"
+          class="input"
+          v-model="search"
+          @input="updateSearch($event.target.value)"
+        />
         <span class="icon is-small is-left">
           <i class="fas fa-search"></i>
         </span>
@@ -15,7 +21,7 @@
         <table class="table is-narrow is-fullwidth">
           <colonnes />
           <template v-for="p in searchResults">
-            <Produit :p="p" :key="p.id" editable="true"/>
+            <Produit :p="p" :key="p.id" editable="true" />
           </template>
         </table>
       </template>
@@ -31,7 +37,7 @@
             </tr>
             <template v-if="!groupe.hidden">
               <template v-for="p in groupe.ps">
-                <Produit :p="p" :key="p.id"  editable="true"/>
+                <Produit :p="p" :key="p.id" editable="true" />
               </template>
             </template>
 
@@ -59,7 +65,7 @@ export default {
       if (this.$route.query.s) {
         this.search = this.$route.query.s;
       } else {
-        this.search='';
+        this.search = "";
       }
     },
   },
@@ -74,6 +80,9 @@ export default {
     };
   },
   methods: {
+    updateSearch(value) {
+      this.search = value;
+    },
     afficherGroupe(groupe) {
       if (this.search) {
         let afficher = 0;
