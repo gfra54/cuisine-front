@@ -85,8 +85,8 @@ export default {
         }
         if(ok){
           this.search=key;
+          this.$refs.recherche.focus();
         }
-        this.$refs.recherche.focus();
       }
     });
     if (this.$route.query.s) {
